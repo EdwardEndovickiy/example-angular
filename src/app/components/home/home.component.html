@@ -1,0 +1,7 @@
+<mat-list>
+  <mat-list-item *ngFor="let story of stories">
+    <h3>{{story.title}}</h3>
+    <button mat-button class="goto-story"><a [href]="story.url">Go to original story</a></button>
+    <button mat-button class="full-story" (click)="openDialog(story)">View full</button>
+  </mat-list-item>
+</mat-list>
