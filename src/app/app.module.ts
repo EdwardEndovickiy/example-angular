@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -11,7 +12,8 @@ import { StoryService } from './services/home.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatCardModule, MatButtonModule, MatDialogModule
+  MatCardModule, MatButtonModule, MatDialogModule, MatTableModule,
+  MatInputModule
 } from '@angular/material';
 import { FullStoryComponent } from './components/full-story/full-story.component';
 
@@ -25,11 +27,14 @@ import { FullStoryComponent } from './components/full-story/full-story.component
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
 
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTableModule,
+    MatInputModule
   ],
   entryComponents: [FullStoryComponent],
   providers: [StoryService],

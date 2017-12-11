@@ -2,5 +2,8 @@
   <button mat-mini-fab color="primary" (click)="onNoClick()">x</button>
 </p>
 <div>
-  {{data | json}}
+  "author": {{data.author | json}}
+  "created_at": {{data.created_at | json}}
+  "title": {{data.title | json}}
+  "url": {{data.url | json}}
 </div>

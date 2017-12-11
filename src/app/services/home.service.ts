@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 
 //model
-import { Story } from './../models/story';
+import { IStory } from './../models/story';
 
 const STORY_URL = 'https://hn.algolia.com/api/v1/search_by_date?tags=story';
 
@@ -14,10 +14,10 @@ export class StoryService {
 
   constructor(private _http: HttpClient) { }
 
-  public getAllStory(): Observable<Story[]> {
-    return new Observable((observer: Observer<Story[]>) => {
+  public getAllStory(): Observable<IStory[]> {
+    return new Observable((observer: Observer<IStory[]>) => {
       this._http
-        .get<Story[]>(STORY_URL)
+        .get<IStory[]>(STORY_URL)
         .subscribe(
           (response: any[]) => {
             observer.next(response);

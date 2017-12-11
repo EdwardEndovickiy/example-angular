@@ -4,9 +4,10 @@ import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import 'rxjs/add/operator/takeWhile';
 import { MatDialog } from '@angular/material';
 
-import { Story } from './../../models/story';
+import { IStory } from './../../models/story';
 
 import { FullStoryComponent } from '../full-story/full-story.component';
+import { MatTableDataSource } from '@angular/material';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +15,12 @@ import { FullStoryComponent } from '../full-story/full-story.component';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public stories: Story[];
+  public stories: IStory[];
   private alive: boolean = true;
   private timer = 10000;
-  public sortTitle = false;
+  private str = '';
+  public displayedColumns = ['author','created_at','url','title'];
+  public dataSource = new MatTableDataSource([]);
 
   constructor(private _storyService: StoryService,
               public dialog: MatDialog) { }
@@ -28,6 +31,7 @@ export class HomeComponent implements OnInit {
       .subscribe(
         data => {
           this.stories = data['hits'];
+          this.dataSource = new MatTableDataSource(this.stories);
           this.getStory();
         },
         error => console.log('Can not load')
@@ -42,43 +46,27 @@ export class HomeComponent implements OnInit {
           .getAllStory()
           .subscribe(
             data => {
-              if (this.sortTitle) {
-                this.stories = data['hits'].sort(this.sortByTitle);
-              } else {
-                this.stories = data['hits'];
-              }
+              this.stories = data['hits'];
+              this.dataSource = new MatTableDataSource(this.stories);
+              this.dataSource.filter = this.str;
             },
             error => console.log('Can not load')
           )
       });
   }
 
-  public openDialog(story: Story): void {
+  public openDialog(story: IStory): void {
     let dialogRef = this.dialog.open(FullStoryComponent, {
       width: '60%',
       data: story
     });
   }
 
-  public sort() {
-    this.sortTitle = !this.sortTitle;
-    if (this.sortTitle) {
-      this.stories.sort(this.sortByTitle);
-    } else {
-      this.stories.sort(this.sortByDate);
-    }
-  }
-
-  public sortByTitle(story1, story2) {
-    if (story1.title < story2.title) return -1;
-    else if ( story1.title > story2.title) return 1;
-    else return 0;
-  }
-
-  public sortByDate(story1, story2) {
-    if (story1.created_at > story2.created_at) return -1;
-    else if ( story1.created_at < story2.created_at) return 1;
-    else return 0;
+  public applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.str = filterValue;
+    this.dataSource.filter = filterValue;
   }
 
 }

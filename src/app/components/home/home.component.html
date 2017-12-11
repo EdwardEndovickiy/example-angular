@@ -1,8 +1,8 @@
-<button mat-button (click)="sort()">Sort by title {{sortTitle ? 'on' : 'off'}}</button>
+<!-- <button mat-button (click)="sort()">Sort by title {{sortTitle ? 'on' : 'off'}}</button>
 
-<mat-card class="example-card" *ngFor="let story of stories">
+<mat-card *ngFor="let story of stories">
   <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
+    <div mat-card-avatar></div>
     <mat-card-title>{{story.author}}</mat-card-title>
     <mat-card-subtitle>{{story.created_at | date :'medium'}}</mat-card-subtitle>
   </mat-card-header>
@@ -14,3 +14,37 @@
     <button mat-button (click)="openDialog(story)">View full</button>
   </mat-card-actions>
 </mat-card>
+ -->
+<div>
+  <div>
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+    <ng-container matColumnDef="author">
+      <mat-header-cell *matHeaderCellDef class="header-cell-story"> author </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.author}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef class="header-cell-story"> created_at </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.created_at | date :'medium'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef class="header-cell-story"> title </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="url">
+      <mat-header-cell *matHeaderCellDef class="header-cell-story"> url </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.url}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row class="row-story" *matRowDef="let row; columns: displayedColumns;let element" (click)="openDialog(element)"></mat-row>
+  </mat-table>
+</div>
