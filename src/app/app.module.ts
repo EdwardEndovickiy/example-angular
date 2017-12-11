@@ -11,7 +11,7 @@ import { StoryService } from './services/home.service';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
-  MatListModule, MatButtonModule, MatDialogModule
+  MatCardModule, MatButtonModule, MatDialogModule
 } from '@angular/material';
 import { FullStoryComponent } from './components/full-story/full-story.component';
 
@@ -28,7 +28,7 @@ import { FullStoryComponent } from './components/full-story/full-story.component
 
     BrowserAnimationsModule,
     MatButtonModule,
-    MatListModule,
+    MatCardModule,
     MatDialogModule
   ],
   entryComponents: [FullStoryComponent],
